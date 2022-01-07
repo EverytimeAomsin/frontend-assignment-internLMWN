@@ -22,7 +22,7 @@ function App() {
         <MDBCol md='3' className='col-example'>
         </MDBCol>
         <MDBCol md='6' className='col-example'>
-          <h1 style={{ fontSize: '400%' }} className='fw-bolder text-center text-info '>เทียวที่ไหนดี</h1>
+          <h1 style={{ fontSize: '400%' }} className='fw-bolder text-center text-info header'>เทียวที่ไหนดี</h1>
           <div style={{ marginTop: '40px' }}>
             <MDBInput label='หาที่เที่ยวกัน' id='form1' type='text' />
           </div>
@@ -35,8 +35,8 @@ function App() {
                   </MDBCol>
                   <MDBCol md='8' className='col-example'>
                     <h4 className='fw-bolder Kanit700'><a className="link-dark ms-2" href={trip.url}>{trip.title}</a></h4>
-                    <p className="line-clamp-description">{trip.description}</p>
-                    <p >ลงเครื่องที่ สนามบินเถาหยวน เวลา... <a href={trip.url} className="text-decoration-underline">อ่านต่อ</a><p style={{ fontSize: '13px' }}>หมวด - กรุ๊ปกิน ทริปต่างประเทศ และ ทริปเอเชีย</p></p>
+                    <p className="line-clamp-description Kanit300">{trip.description}</p>
+                    <p className="Kanit300">ลงเครื่องที่ สนามบินเถาหยวน เวลา... <a href={trip.url} className="text-decoration-underline">อ่านต่อ</a><p style={{ fontSize: '13px' }}>หมวด - กรุ๊ปกิน ทริปต่างประเทศ และ ทริปเอเชีย</p></p>
                     <div >
                       <div className="d-flex flex-row  mb-3">
                         <div className="p-2"><img src='https://img.wongnai.com/p/1600x0/2019/07/02/941dbb607f0742bbadd63bbbd993e187.jpg' className='img-fluid  rounded' alt='...' /></div>
