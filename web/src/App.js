@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { MDBContainer, MDBInput, MDBRow, MDBCol, MDBTypography } from 'mdb-react-ui-kit';
 import './App.css';
+import './css/input.css'
 
 import {
   BrowserRouter as Router,
@@ -20,11 +21,11 @@ function App() {
   }, []);
 
   const loadMenus = async () => {
-    const result = await axios.get("http://localhost:9000/trips" + "?q="+ "คาเฟ่"  );
+    const result = await axios.get("http://localhost:9000/trips" + "?q=" + "คาเฟ่");
     setMenu(result.data.reverse());
     setphoto(result.data.reverse());
   };
- 
+
   let { id } = useParams();
   console.log(id)
   return (
@@ -35,8 +36,11 @@ function App() {
         <MDBCol md='8' className=''>
           <h1 style={{ fontSize: '400%' }} className='fw-bolder text-center text-info header'>เที่ยวไหนดี</h1>
           <div style={{ marginTop: '80px' }}>
-            <MDBInput label='หาที่เที่ยวกัน' id='form1' type='text' />
-            
+
+            <div class="form__group field ">
+              <input type="input" class="form__field" placeholder="Name" name="name" id='name' />
+              <label for="name" class="form__label Kanit300">หาที่เทียวแล้วไปกัน</label>
+            </div>
           </div>
           <div>
 
@@ -52,11 +56,11 @@ function App() {
                       <MDBTypography className='lead mb-0  ' style={{ fontSize: '15px' }}>
                         <span className="line-clamp-description">{trip.description}</span>  <a href={trip.url} className="text-decoration-underline">อ่านต่อ</a>
                       </MDBTypography>
-                      <div className="d-flex align-items-start"><p>หมวด - 
-                      {trip.tags.map((tag) =>
-                      <Router>
-                          <Link to="คาเฟ่"><span >{tag + ","}</span></Link>
-                      
+                      <div className="d-flex align-items-start"><p>หมวด -
+                        {trip.tags.map((tag) =>
+                          <Router>
+                            <Link to="คาเฟ่"><span >{" " + tag + ","}</span></Link>
+
                           </Router>
                         )}</p></div>
                       <div className="d-flex align-items-start">
