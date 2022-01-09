@@ -1,33 +1,34 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { MDBContainer, MDBInput, MDBRow, MDBCol, MDBTypography } from 'mdb-react-ui-kit';
+import { MDBContainer, MDBRow, MDBCol, MDBTypography } from 'mdb-react-ui-kit';
 import './App.css';
 import './css/input.css'
 
 import {
   BrowserRouter as Router,
-  Switch,
+  Switch, Routes,
   Route,
   Link,
   useParams
 } from "react-router-dom";
 
 function App() {
-  const [trips, setMenu] = useState([]);
+  const [trips, settrips] = useState([]);
   const [photo, setphoto] = useState([]);
   useEffect(() => {
     document.title = "เที่ยวไหนดี";
-    loadMenus();
+    loadtrips();
   }, []);
 
-  const loadMenus = async () => {
-    const result = await axios.get("http://localhost:9000/trips" + "?q=" + "คาเฟ่");
-    setMenu(result.data.reverse());
+  const loadtrips = async () => {
+    const result = await axios.get("http://localhost:9000/trips" + "?q=" + text);
+    settrips(result.data.reverse());
     setphoto(result.data.reverse());
   };
-
-  let { id } = useParams();
-  console.log(id)
+  let url = '';
+  let id = url;
+  const [text, settext] = useState("");
+  console.log(text)
   return (
     <div style={{ marginTop: '80px' }} className="">
       <MDBRow>
@@ -59,7 +60,7 @@ function App() {
                       <div className="d-flex align-items-start"><p>หมวด -
                         {trip.tags.map((tag) =>
                           <Router>
-                            <Link to="คาเฟ่"><span >{" " + tag + ","}</span></Link>
+                            <Link to="คาเฟ่" onClick={() => settext(tag)}><span >{" " + tag + ","}</span></Link>
 
                           </Router>
                         )}</p></div>
@@ -82,13 +83,29 @@ function App() {
         </MDBCol>
       </MDBRow>
 
+      <Router>
 
+        <Switch>
+          <Route path="/:id" children={<Child />} />
+        </Switch>
 
+      </Router>
+      <h3>คำค้นหา : {text}</h3>
     </div>
   );
 }
 
+function Child() {
+  // We can use the `useParams` hook here to access
+  // the dynamic pieces of the URL.
+  let { id } = useParams();
 
+  return (
+    <div>
+     
+    </div>
+  );
+}
 
 export default App;
 
