@@ -13,22 +13,29 @@ import {
 } from "react-router-dom";
 
 function App() {
+  
+  const [keyword, setkeyword] = useState('')
+  
   const [trips, settrips] = useState([]);
   const [photo, setphoto] = useState([]);
   useEffect(() => {
+    
     document.title = "เที่ยวไหนดี";
     loadtrips();
+    
   }, []);
 
   const loadtrips = async () => {
-    const result = await axios.get("http://localhost:9000/trips" + "?q=" + text);
+    const result = await axios.get("http://localhost:9000/trips" + "?q=" + text2 + keyword);
     settrips(result.data.reverse());
     setphoto(result.data.reverse());
   };
   let url = '';
   let id = url;
-  const [text, settext] = useState("");
-  console.log(text)
+  
+  let [text, settext] = useState("");
+  const text2 = text;
+  console.log(text2)
   return (
     <div style={{ marginTop: '80px' }} className="">
       <MDBRow>
@@ -38,10 +45,14 @@ function App() {
           <h1 style={{ fontSize: '400%' }} className='fw-bolder text-center text-info header'>เที่ยวไหนดี</h1>
           <div style={{ marginTop: '80px' }}>
 
+          <form >
             <div class="form__group field ">
-              <input type="input" class="form__field" placeholder="Name" name="name" id='name' />
-              <label for="name" class="form__label Kanit300">หาที่เทียวแล้วไปกัน</label>
+              <input type="input" value={ keyword } onChange={e => setkeyword(e.target.value)} class="form__field" placeholder="keyword" name="keyword" id='keyword' />
+              <label for="keyword" class="form__label Kanit300">หาที่เทียวแล้วไปกัน</label>
+             <h1>{keyword}</h1>
             </div>
+            </form>
+
           </div>
           <div>
 
@@ -60,7 +71,7 @@ function App() {
                       <div className="d-flex align-items-start"><p>หมวด -
                         {trip.tags.map((tag) =>
                           <Router>
-                            <Link to="คาเฟ่" onClick={() => settext(tag)}><span >{" " + tag + ","}</span></Link>
+                            <Link to={'keyword=' + tag} onClick={() => settext(tag)}><span >{" " + tag + ","}</span></Link>
 
                           </Router>
                         )}</p></div>
