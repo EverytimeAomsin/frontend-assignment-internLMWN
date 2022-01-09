@@ -3,7 +3,6 @@ import axios from "axios";
 import { MDBContainer, MDBRow, MDBCol, MDBTypography } from 'mdb-react-ui-kit';
 import './App.css';
 import './css/input.css'
-
 import {
   BrowserRouter as Router,
   Switch, Routes,
@@ -12,108 +11,89 @@ import {
   useParams
 } from "react-router-dom";
 
+
 function App() {
-  
-  const [keyword, setkeyword] = useState('')
-  
-  const [trips, settrips] = useState([]);
-  const [photo, setphoto] = useState([]);
+  const [trips, gettrips] = useState([]);
+  const [query, setQuery] = useState("");
+
+
   useEffect(() => {
-    
     document.title = "เที่ยวไหนดี";
-    loadtrips();
-    
   }, []);
 
-  const loadtrips = async () => {
-    const result = await axios.get("http://localhost:9000/trips" + "?q=" + text2 + keyword);
-    settrips(result.data.reverse());
-    setphoto(result.data.reverse());
+  const keyword = () => {
+    axios.get(`http://localhost:8000/api/trips?keyword=${query}`).then((res) => {
+      if (res.status === 200) {
+        gettrips(res.data);
+        console.log(res.data);
+      }
+    })
+      .catch((error) => {
+        console.log(error);
+      });
   };
-  let url = '';
-  let id = url;
+
   
-  let [text, settext] = useState("");
-  const text2 = text;
-  console.log(text2)
   return (
-    <div style={{ marginTop: '80px' }} className="">
+    <div className="MT80">
       <MDBRow>
         <MDBCol md='2' className=''>
         </MDBCol>
         <MDBCol md='8' className=''>
-          <h1 style={{ fontSize: '400%' }} className='fw-bolder text-center text-info header'>เที่ยวไหนดี</h1>
-          <div style={{ marginTop: '80px' }}>
+          <h1 className='fw-bolder text-center text-info header FS400'>เที่ยวไหนดี</h1>
+          <div className="MT80">
+            <form >
+              <div class="form__group field ">
+                <input type="input" type="keyword"
+                 placeholder="หาที่เที่ยวแล้วไปกัน..."
+                  onChange={(event) => { setQuery(event.target.value); }}
+                  onKeyPress={keyword} 
+                  value={query}
+                  class="form__field" placeholder="keyword" name="keyword" id='keyword' />
+                <label for="keyword" class="form__label Kanit300">หาที่เที่ยวแล้วไปกัน</label>
 
-          <form >
-            <div class="form__group field ">
-              <input type="input" value={ keyword } onChange={e => setkeyword(e.target.value)} class="form__field" placeholder="keyword" name="keyword" id='keyword' />
-              <label for="keyword" class="form__label Kanit300">หาที่เทียวแล้วไปกัน</label>
-             <h1>{keyword}</h1>
-            </div>
+              </div>
             </form>
-
           </div>
+          
           <div>
-
-            {trips.map((trip) => (
-              <div style={{ marginTop: '50px' }}>
+            {trips.map((trip,index) => (
+              <div className="MT50">
                 <MDBContainer>
                   <MDBRow>
                     <MDBCol md='4' className=''>
-                      <img src={trip.photos[0]} className='img-fluid rounded mhm ' ></img>
+                      <img src={trip.photos[0]} className='img-fluid  mhm ' ></img>
                     </MDBCol>
                     <MDBCol md='7' className=''>
-                      <h4 className='fw-bolder Kanit700' style={{ fontSize: '23px' }}><a className="link-dark " href={trip.url}>{trip.title}</a></h4>
-                      <MDBTypography className='lead mb-0  ' style={{ fontSize: '15px' }}>
-                        <span className="line-clamp-description">{trip.description}</span>  <a href={trip.url} className="text-decoration-underline">อ่านต่อ</a>
+                      <h4 className='fw-bolder Kanit700 MTT'><a className="link-dark FS23" href={trip.url}>{trip.title}</a></h4>
+                       <MDBTypography className='lead mb-0 Kanit300' style={{ fontSize: '15px' }}>
+                        <span className="line-clamp-description text22">{trip.description}</span>
+                        <span> <a href={trip.url} className="text-decoration-underline">อ่านต่อ</a></span>
                       </MDBTypography>
                       <div className="d-flex align-items-start"><p>หมวด -
-                        {trip.tags.map((tag) =>
+                        {trip.tags.map((tag,id) =>
                           <Router>
-                            <Link to={'keyword=' + tag} onClick={() => settext(tag)}><span >{" " + tag + ","}</span></Link>
+                            <Link onMouseDown={() => setQuery(trips[index].tags[id])} onClick={keyword}><span >{" " + tag + ","}</span></Link>
 
                           </Router>
                         )}</p></div>
-                      <div className="d-flex align-items-start">
+                        <div className="d-flex align-items-start">
                         {trip.photos.map((photo) =>
                           <div className="p-2"><img src={photo} className='img-fluid  rounded mhs' alt='...' /></div>
                         )}
 
                       </div>
+                     
                     </MDBCol>
                   </MDBRow>
                 </MDBContainer>
               </div>
             ))}
-
           </div>
-
         </MDBCol>
         <MDBCol md='2' className='col-example'>
         </MDBCol>
       </MDBRow>
-
-      <Router>
-
-        <Switch>
-          <Route path="/:id" children={<Child />} />
-        </Switch>
-
-      </Router>
-      <h3>คำค้นหา : {text}</h3>
-    </div>
-  );
-}
-
-function Child() {
-  // We can use the `useParams` hook here to access
-  // the dynamic pieces of the URL.
-  let { id } = useParams();
-
-  return (
-    <div>
-     
     </div>
   );
 }

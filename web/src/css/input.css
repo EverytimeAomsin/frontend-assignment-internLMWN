@@ -29,11 +29,12 @@
 .form__label {
   position: absolute;
   top: 0;
-  left: 43%;
+  left: 44%;
   display: block;
   transition: 0s;
   font-size: 1rem;
-  color: #353535;
+  color: #616161;
+  
   
 }
 .form__field:focus {
@@ -57,15 +58,6 @@
 /* reset input */
 .form__field:required, .form__field:invalid {
   box-shadow: none;
+ 
 }
-/* demo */
-.input {
-  font-family: 'Poppins', sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  font-size: 1.5rem;
-  background-color: #222;
-}
+
