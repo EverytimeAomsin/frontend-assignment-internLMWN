@@ -10,10 +10,11 @@ import {
 
 
 function App() {
-  
+
   useEffect(() => {
     document.title = "เที่ยวไหนดี";
     keyword();
+
   }, []);
 
   const [trips, gettrips] = useState([]);
@@ -41,16 +42,20 @@ function App() {
           <h1 className='fw-bolder text-center text-info header FS400'>เที่ยวไหนดี</h1>
           <div className="MT80">
             <Router>
-              <div class="form__group field ">
+              <div className="form__group field ">
+
+                  {/* ช่องค้นหา */}
+
                 <input type="input"
                   type="keyword"
                   placeholder="หาที่เที่ยวแล้วไปกัน..."
                   onKeyPress={keyword}
-                  to = '/hh'
                   onChange={(event) => { setQuery(event.target.value); }}
                   value={query}
-                  class="form__field" placeholder="keyword" name="keyword" id='keyword' />
-                <label for="keyword" class="form__label Kanit300">หาที่เที่ยวแล้วไปกัน</label>
+                  className="form__field" placeholder="keyword" name="keyword" id='keyword' />
+                <label for="keyword" className="form__label Kanit300">หาที่เที่ยวแล้วไปกัน</label>
+
+                {/* ช่องค้นหา */}
               </div>
             </Router>
           </div>
@@ -64,22 +69,25 @@ function App() {
                       <img src={trip.photos[0]} className='img-fluid  mhm ' ></img>
                     </MDBCol>
                     <MDBCol md='7' className=''>
-                      <h4 className='fw-bolder Kanit700 MTT'><a className="link-dark FS23" href={trip.url}>{trip.title}</a></h4>
+                       <h4 className='fw-bolder Kanit700 MTT'><a className="link-dark FS23" href={trip.url}>{trip.title}</a></h4> {/* ชื่อเรื่อง */}
                       <MDBTypography className='lead mb-0 Kanit300' style={{ fontSize: '15px' }}>
                         <span className="line-clamp-description ">{trip.description}</span>
                         <span> <a href={trip.url} className="text-decoration-underline">อ่านต่อ</a></span>
                       </MDBTypography>
-                      <div className="d-flex align-items-start"><p>หมวด -
+
+                      <div className="d-flex align-items-start"><p>หมวด - {/* Tag */}
                         {trip.tags.map((tag, idTag) =>
                           <Router>
                             <Link onMouseDown={() => setQuery(trips[index].tags[idTag])} onClick={keyword}><span >{" " + tag + ","}</span></Link>
-
                           </Router>
-                        )}</p></div>
+                        )}</p></div>   {/* Tag */}
+
                       <div className="d-flex align-items-start">
-                        {trip.photos.map((photo) =>
-                          <div className="p-2"><img src={photo} className='img-fluid  rounded mhs' alt='...' /></div>
-                        )}
+                       
+                          <div className="p-2"><img src={trip.photos[1]} className='img-fluid  rounded mhs' alt='...' /></div>
+                          <div className="p-2"><img src={trip.photos[2]} className='img-fluid  rounded mhs' alt='...' /></div>
+                          <div className="p-2"><img src={trip.photos[3]} className='img-fluid  rounded mhs' alt='...' /></div>
+                       
 
                       </div>
 
@@ -96,6 +104,9 @@ function App() {
     </div>
   );
 }
+
+
+
 
 export default App;
 
