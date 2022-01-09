@@ -9,14 +9,6 @@ app.get('/', function (req, res) {
     res.send("api-gateway");
 });
 
-// server.get('/trips', function (req, res, next) {
-//     return res.status(200).json({
-//       code: 1,
-//       message: 'OK',
-//       data: trips
-//     })
-//   });
-
 app.get('/api/trips', async (req, res) => {
 
     const keyword = req.query.keyword;
@@ -31,3 +23,11 @@ app.listen(8000, () => {
     console.log('Server Listen at http://localhost:8000');
     // console.log('db :', db)
 });
+
+// server.get('/trips', function (req, res, next) {
+//     return res.status(200).json({
+//       code: 1,
+//       message: 'OK',
+//       data: trips
+//     })
+//   });

@@ -9,18 +9,17 @@ import {
 } from "react-router-dom";
 
 
-function App() {
-  
-  useEffect(() => {
-    document.title = "เที่ยวไหนดี";
-    keyword();
-  }, []);
-
+function Intro() {
   const [trips, gettrips] = useState([]);
   const [query, setQuery] = useState("");
 
+
+  useEffect(() => {
+    document.title = "เที่ยวไหนดี";
+  }, []);
+
   const keyword = () => {
-    axios.get(`http://localhost:8000/api/trips?keyword=${query}`).then((res) => {
+    axios.get(`http://localhost:8000/api/trips?keyword=`).then((res) => {
       if (res.status === 200) {
         gettrips(res.data);
         console.log(res.data);
@@ -40,19 +39,18 @@ function App() {
         <MDBCol md='8' className=''>
           <h1 className='fw-bolder text-center text-info header FS400'>เที่ยวไหนดี</h1>
           <div className="MT80">
-            <Router>
-              <div class="form__group field ">
-                <input type="input"
-                  type="keyword"
-                  placeholder="หาที่เที่ยวแล้วไปกัน..."
-                  onKeyPress={keyword}
-                  to = '/hh'
-                  onChange={(event) => { setQuery(event.target.value); }}
-                  value={query}
-                  class="form__field" placeholder="keyword" name="keyword" id='keyword' />
-                <label for="keyword" class="form__label Kanit300">หาที่เที่ยวแล้วไปกัน</label>
-              </div>
-            </Router>
+          <Router>
+            <div class="form__group field ">
+              <input type="input"
+                type="keyword"
+                placeholder="หาที่เที่ยวแล้วไปกัน..."
+                onKeyPress={keyword}
+                onChange={(event) => { setQuery(event.target.value); }}
+                value={query}
+                class="form__field" placeholder="keyword" name="keyword" id='keyword' />
+              <label for="keyword" class="form__label Kanit300">หาที่เที่ยวแล้วไปกัน</label>
+            </div>
+</Router>
           </div>
 
           <div>
@@ -97,6 +95,6 @@ function App() {
   );
 }
 
-export default App;
+export default Intro;
 
 
